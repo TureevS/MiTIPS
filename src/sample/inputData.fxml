@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="900.0" prefWidth="1167.0" style="-fx-background-color: F9F9F9;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.inputDataController">
+   <children>
+      <Text fill="#007439" layoutX="78.0" layoutY="85.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ввод исходных данных" wrappingWidth="458.0">
+         <font>
+            <Font name="Tahoma Bold" size="37.0" />
+         </font>
+      </Text>
+      <Button fx:id="MenuButton" layoutX="984.0" layoutY="-1.0" mnemonicParsing="false" prefHeight="106.0" prefWidth="82.0" style="-fx-background-color: F9F9F9;" text="≡" textFill="#007439" textOverrun="WORD_ELLIPSIS">
+         <font>
+            <Font name="Tahoma" size="74.0" />
+         </font>
+      </Button>
+      <ComboBox fx:id="signsChoiceBox" layoutX="85.0" layoutY="773.0" prefHeight="32.0" prefWidth="104.0" promptText="Признак" />
+      <ComboBox fx:id="valueChoiceBox" layoutX="298.0" layoutY="773.0" prefHeight="32.0" prefWidth="111.0" promptText="Значение" />
+      <TextField fx:id="timeTextField" layoutX="187.0" layoutY="773.0" prefHeight="32.0" prefWidth="111.0" promptText="Момент времени" />
+      <TextArea fx:id="checkResult" layoutX="543.0" layoutY="172.0" prefHeight="463.0" prefWidth="535.0">
+         <font>
+            <Font name="Verdana" size="11.0" />
+         </font>
+      </TextArea>
+      <TableView fx:id="valuesTable" layoutX="85.0" layoutY="172.0" prefHeight="601.0" prefWidth="388.0" style="-fx-background-radius: 5; -fx-border-radius: 5;">
+         <columns>
+            <TableColumn fx:id="signColumn" prefWidth="104.0" text="Признак" />
+            <TableColumn fx:id="timeColumn" prefWidth="109.0" text="Момент времени" />
+            <TableColumn fx:id="valuesColumn" prefWidth="174.0" text="Значение" />
+         </columns>
+      </TableView>
+      <Button fx:id="addButton" layoutX="407.0" layoutY="773.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="24.0" style="-fx-background-color: FFFFFF; -fx-border-color: #666666; -fx-border-radius: 5; -fx-border-width: 2; -fx-background-radius: 10;" text="+" textFill="#666666" textOverrun="WORD_ELLIPSIS">
+         <font>
+            <Font name="Tahoma" size="14.0" />
+         </font>
+      </Button>
+      <Button fx:id="deleteButton" layoutX="440.0" layoutY="773.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="33.0" style="-fx-background-color: FFFFFF; -fx-border-color: #666666; -fx-border-radius: 5; -fx-border-width: 2; -fx-background-radius: 10;" text="-" textFill="#666666" textOverrun="WORD_ELLIPSIS">
+         <font>
+            <Font name="Tahoma" size="14.0" />
+         </font>
+      </Button>
+      <Button fx:id="diagnosticButton" layoutX="543.0" layoutY="140.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="535.0" style="-fx-background-color: FFFFFF; -fx-border-color: #007439; -fx-border-radius: 5; -fx-border-width: 2; -fx-background-radius: 10;" text="Поставить диагноз" textFill="#007439" textOverrun="WORD_ELLIPSIS">
+         <font>
+            <Font name="Verdana Bold" size="13.0" />
+         </font>
+      </Button>
+      <Button fx:id="clearButton" layoutX="86.0" layoutY="140.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="388.0" style="-fx-background-color: FFFFFF; -fx-border-color: #007439; -fx-border-radius: 5; -fx-border-width: 2; -fx-background-radius: 10;" text="Очистить" textFill="#007439" textOverrun="WORD_ELLIPSIS">
+         <font>
+            <Font name="Verdana Bold" size="13.0" />
+         </font>
+      </Button>
+      <TableView fx:id="unsuitableTable" layoutX="543.0" layoutY="635.0" prefHeight="180.0" prefWidth="181.0" style="-fx-background-radius: 5; -fx-border-radius: 5;">
+         <columns>
+            <TableColumn fx:id="notColumn" prefWidth="180.0" text="Неподходящие заболевания" />
+         </columns>
+      </TableView>
+      <TableView fx:id="possibleTable" layoutX="724.0" layoutY="635.0" prefHeight="180.0" prefWidth="181.0" style="-fx-background-radius: 5; -fx-border-radius: 5;">
+         <columns>
+            <TableColumn fx:id="possibleColumn" prefWidth="180.0" text="Возможные заболевания" />
+         </columns>
+      </TableView>
+      <TableView fx:id="accurateTable" layoutX="905.0" layoutY="635.0" prefHeight="180.0" prefWidth="181.0" style="-fx-background-radius: 5; -fx-border-radius: 5;">
+         <columns>
+            <TableColumn fx:id="accurateColumn" prefWidth="180.0" text="Точный диагноз" />
+         </columns>
+      </TableView>
+   </children>
+</AnchorPane>

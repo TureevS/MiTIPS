@@ -31,7 +31,7 @@ public class Controller {
             open("/sample/Redactor.fxml", redactorButton, "Редактор базы знаний");
         });
         dataButton.setOnAction(event ->{
-            open("/sample/Deliveries.fxml", dataButton, "Ввод исходных данных");
+            open("/sample/inputData.fxml", dataButton, "Ввод исходных данных");
         });
         tableButton.setOnAction(event ->{
             open("/sample/staff.fxml", tableButton, "Таблица");

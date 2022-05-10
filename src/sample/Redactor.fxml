@@ -1,78 +1,196 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="900.0" prefWidth="1600.0" style="-fx-background-color: F9F9F9;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.RedactorController">
+<AnchorPane prefHeight="900.0" prefWidth="1167.0" style="-fx-background-color: F9F9F9;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.RedactorController">
    <children>
-      <Text fill="#007439" layoutX="28.0" layoutY="51.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Редактор базы знаний" wrappingWidth="458.0">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffffff00" height="412.0" layoutX="383.0" layoutY="463.0" stroke="#666666" strokeType="INSIDE" width="286.0" />
+      <Text fill="#007439" layoutX="46.0" layoutY="51.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Редактор базы знаний" wrappingWidth="458.0">
          <font>
             <Font name="Tahoma Bold" size="37.0" />
          </font>
       </Text>
-      <Button fx:id="MenuButton" layoutX="1448.0" layoutY="-36.0" mnemonicParsing="false" prefHeight="121.0" prefWidth="129.0" style="-fx-background-color: F9F9F9;" text="≡" textFill="#007439" textOverrun="WORD_ELLIPSIS">
+      <Button fx:id="MenuButton" layoutX="1019.0" layoutY="-24.0" mnemonicParsing="false" prefHeight="106.0" prefWidth="82.0" style="-fx-background-color: F9F9F9;" text="≡" textFill="#007439" textOverrun="WORD_ELLIPSIS">
          <font>
             <Font name="Tahoma" size="74.0" />
          </font>
       </Button>
-      <TableView fx:id="diseasesTable" layoutX="46.0" layoutY="108.0" prefHeight="323.0" prefWidth="286.0">
+      <TableView fx:id="diseasesTable" layoutX="46.0" layoutY="81.0" prefHeight="285.0" prefWidth="286.0" style="-fx-border-radius: 5; -fx-background-radius: 5;">
         <columns>
-          <TableColumn fx:id="diseaseColumn" prefWidth="285.0" text="Заболевания" />
+          <TableColumn fx:id="diseaseColumn" minWidth="0.0" prefWidth="285.0" text="Заболевания" />
         </columns>
       </TableView>
-      <TextField fx:id="diseasesTextField" layoutX="46.0" layoutY="431.0" prefHeight="32.0" prefWidth="286.0" />
-      <Button fx:id="diseasesAddButton" layoutX="299.0" layoutY="431.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="33.0" style="-fx-background-color: FFFFFF; -fx-border-color: #666666; -fx-border-radius: 10; -fx-border-width: 2; -fx-background-radius: 10;" text="+" textFill="#666666" textOverrun="WORD_ELLIPSIS">
+      <TextField fx:id="diseasesTextField" layoutX="46.0" layoutY="366.0" prefHeight="32.0" prefWidth="220.0" />
+      <Button fx:id="diseasesAddButton" layoutX="266.0" layoutY="366.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="33.0" style="-fx-background-color: FFFFFF; -fx-border-color: #666666; -fx-border-radius: 5; -fx-border-width: 2; -fx-background-radius: 10;" text="+" textFill="#666666" textOverrun="WORD_ELLIPSIS">
          <font>
             <Font name="Tahoma" size="14.0" />
          </font>
       </Button>
-      <TableView fx:id="signsTable" layoutX="46.0" layoutY="494.0" prefHeight="337.0" prefWidth="286.0">
+      <TableView fx:id="signsTable" layoutX="382.0" layoutY="80.0" prefHeight="254.0" prefWidth="286.0">
          <columns>
             <TableColumn fx:id="signColumn" prefWidth="285.0" text="Признаки" />
          </columns>
       </TableView>
-      <TextField fx:id="signsTextField" layoutX="46.0" layoutY="831.0" prefHeight="32.0" prefWidth="286.0" />
-      <Button fx:id="signsAddButton" layoutX="299.0" layoutY="831.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="24.0" style="-fx-background-color: FFFFFF; -fx-border-color: #666666; -fx-border-radius: 10; -fx-border-width: 2; -fx-background-radius: 10;" text="+" textFill="#666666" textOverrun="WORD_ELLIPSIS">
-         <font>
-            <Font name="Tahoma" size="14.0" />
-         </font>
-      </Button>
-      <TableView fx:id="picturesTable" layoutX="393.0" layoutY="108.0" prefHeight="724.0" prefWidth="286.0">
+      <TextField fx:id="signsTextField" layoutX="382.0" layoutY="366.0" prefHeight="32.0" prefWidth="220.0" />
+      <TableView fx:id="picturesTable" layoutX="46.0" layoutY="462.0" prefHeight="345.0" prefWidth="286.0" style="-fx-background-radius: 5; -fx-border-radius: 5;">
          <columns>
             <TableColumn fx:id="pictureColumn" prefWidth="285.0" text="Клиническая картина" />
          </columns>
       </TableView>
-      <ComboBox layoutX="393.0" layoutY="71.0" prefHeight="25.0" prefWidth="286.0" promptText="Колит" />
-      <ComboBox layoutX="741.0" layoutY="71.0" prefHeight="25.0" prefWidth="286.0" promptText="Температура" />
-      <TableView fx:id="possibleValuesTable" layoutX="741.0" layoutY="110.0" prefHeight="323.0" prefWidth="286.0">
+      <TableView fx:id="possibleValuesTable" layoutX="749.0" layoutY="110.0" prefHeight="180.0" prefWidth="286.0" style="-fx-background-radius: 5; -fx-border-radius: 5;">
          <columns>
             <TableColumn fx:id="possiblevalueColumn" prefWidth="285.0" text="Возможные значения" />
          </columns>
       </TableView>
-      <TextField fx:id="possibleValuesTextField" layoutX="741.0" layoutY="431.0" prefHeight="32.0" prefWidth="286.0" />
-      <Button fx:id="possibleValuesAddButton" layoutX="994.0" layoutY="431.0" mnemonicParsing="false" prefHeight="14.0" prefWidth="33.0" style="-fx-background-color: FFFFFF; -fx-border-color: #666666; -fx-border-radius: 10; -fx-border-width: 2; -fx-background-radius: 10;" text="+" textFill="#666666" textOverrun="WORD_ELLIPSIS">
+      <Button fx:id="possibleValuesAddButton" layoutX="969.0" layoutY="290.0" mnemonicParsing="false" prefHeight="14.0" prefWidth="33.0" style="-fx-background-color: FFFFFF; -fx-border-color: #666666; -fx-border-radius: 5; -fx-border-width: 2; -fx-background-radius: 10;" text="+" textFill="#666666" textOverrun="WORD_ELLIPSIS">
          <font>
             <Font name="Tahoma" size="14.0" />
          </font>
       </Button>
-      <TableView fx:id="normalValuesTable" layoutX="741.0" layoutY="494.0" prefHeight="337.0" prefWidth="286.0">
+      <TableView fx:id="normalValuesTable" layoutX="749.0" layoutY="322.0" prefHeight="109.0" prefWidth="286.0" style="-fx-background-radius: 5; -fx-border-radius: 5;">
          <columns>
             <TableColumn fx:id="normalvalueColumn" prefWidth="285.0" text="Нормальные значения" />
          </columns>
       </TableView>
-      <TextField fx:id="normalValuesTextField" layoutX="741.0" layoutY="831.0" prefHeight="32.0" prefWidth="286.0" />
-      <Button fx:id="normalValuesAddButton" layoutX="994.0" layoutY="831.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="33.0" style="-fx-background-color: FFFFFF; -fx-border-color: #666666; -fx-border-radius: 10; -fx-border-width: 2; -fx-background-radius: 10;" text="+" textFill="#666666" textOverrun="WORD_ELLIPSIS">
+      <Button fx:id="normalValuesAddButton" layoutX="969.0" layoutY="431.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="33.0" style="-fx-background-color: FFFFFF; -fx-border-color: #666666; -fx-border-radius: 5; -fx-border-width: 2; -fx-background-radius: 10;" text="+" textFill="#666666" textOverrun="WORD_ELLIPSIS">
          <font>
             <Font name="Tahoma" size="14.0" />
          </font>
       </Button>
-      <ChoiceBox fx:id="picturesSelect" layoutX="393.0" layoutY="831.0" prefHeight="32.0" prefWidth="286.0" />
+      <Button fx:id="diseasesDeleteButton" layoutX="299.0" layoutY="366.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="33.0" style="-fx-background-color: FFFFFF; -fx-border-color: #666666; -fx-border-radius: 5; -fx-border-width: 2; -fx-background-radius: 10;" text="-" textFill="#666666" textOverrun="WORD_ELLIPSIS">
+         <font>
+            <Font name="Tahoma" size="14.0" />
+         </font>
+      </Button>
+      <Button fx:id="pvalueDeleteButton" layoutX="1002.0" layoutY="290.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="33.0" style="-fx-background-color: FFFFFF; -fx-border-color: #666666; -fx-border-radius: 5; -fx-border-width: 2; -fx-background-radius: 10;" text="-" textFill="#666666" textOverrun="WORD_ELLIPSIS">
+         <font>
+            <Font name="Tahoma" size="14.0" />
+         </font>
+      </Button>
+      <Button fx:id="nvalueDeleteButton" layoutX="1002.0" layoutY="431.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="33.0" style="-fx-background-color: FFFFFF; -fx-border-color: #666666; -fx-border-radius: 5; -fx-border-width: 2; -fx-background-radius: 10;" text="-" textFill="#666666" textOverrun="WORD_ELLIPSIS">
+         <font>
+            <Font name="Tahoma" size="14.0" />
+         </font>
+      </Button>
+      <Button fx:id="pictureDeleteButton" layoutX="299.0" layoutY="807.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="33.0" style="-fx-background-color: FFFFFF; -fx-border-color: #666666; -fx-border-radius: 5; -fx-border-width: 2; -fx-background-radius: 10;" text="-" textFill="#666666" textOverrun="WORD_ELLIPSIS">
+         <font>
+            <Font name="Tahoma" size="14.0" />
+         </font>
+      </Button>
+      <Button fx:id="pictureAddButton" layoutX="266.0" layoutY="807.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="24.0" style="-fx-background-color: FFFFFF; -fx-border-color: #666666; -fx-border-radius: 5; -fx-border-width: 2; -fx-background-radius: 10;" text="+" textFill="#666666" textOverrun="WORD_ELLIPSIS">
+         <font>
+            <Font name="Tahoma" size="14.0" />
+         </font>
+      </Button>
+      <ComboBox fx:id="diseasesChoiceBox" layoutX="46.0" layoutY="431.0" prefHeight="32.0" prefWidth="286.0" promptText="Выберите заболевание" />
+      <ComboBox fx:id="signsChoiceBox" layoutX="382.0" layoutY="431.0" prefHeight="32.0" prefWidth="286.0" promptText="Выберите признак" />
+      <ComboBox fx:id="pictureChoiceBox" layoutX="46.0" layoutY="807.0" prefHeight="32.0" prefWidth="220.0" promptText="Признак" />
+      <ComboBox fx:id="typeChoiceBox" layoutX="382.0" layoutY="334.0" prefHeight="32.0" prefWidth="286.0" promptText="Выберите тип признака" />
+      <TextField fx:id="possibleValuesTextFieldOt" layoutX="808.0" layoutY="290.0" prefHeight="32.0" prefWidth="51.0" />
+      <Label fx:id="otLabel" alignment="CENTER" layoutX="775.0" layoutY="290.0" prefHeight="32.0" prefWidth="33.0" text="От" textAlignment="CENTER">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="doLabel" alignment="CENTER" layoutX="859.0" layoutY="290.0" prefHeight="32.0" prefWidth="33.0" text="до">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <TextField fx:id="possibleValuesTextFieldDo" layoutX="892.0" layoutY="290.0" prefHeight="32.0" prefWidth="51.0" />
+      <TextField fx:id="possibleValuesTextField" layoutX="749.0" layoutY="290.0" prefHeight="32.0" prefWidth="220.0" />
+      <ComboBox fx:id="normalValueChoiceBox" layoutX="749.0" layoutY="431.0" prefHeight="32.0" prefWidth="220.0" promptText="Значение" />
+      <ComboBox fx:id="periodsChoiceBox" layoutX="550.0" layoutY="557.0" prefHeight="32.0" prefWidth="96.0" promptText="Номер" />
+      <TextField fx:id="quantityTextField" alignment="CENTER" layoutX="546.0" layoutY="506.0" prefHeight="32.0" prefWidth="33.0" />
+      <TextField fx:id="bottomTextField" layoutX="549.0" layoutY="791.0" prefHeight="32.0" prefWidth="96.0" />
+      <Label layoutX="405.0" layoutY="752.0" prefHeight="30.0" prefWidth="123.0" text="Верхняя граница:">
+         <font>
+            <Font name="Verdana" size="13.0" />
+         </font></Label>
+      <Label layoutX="405.0" layoutY="792.0" prefHeight="30.0" prefWidth="123.0" text="Нижняя граница:">
+         <font>
+            <Font name="Verdana" size="13.0" />
+         </font></Label>
+      <Button fx:id="quantityAddButton" layoutX="579.0" layoutY="506.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="33.0" style="-fx-background-color: FFFFFF; -fx-border-color: #666666; -fx-border-radius: 5; -fx-border-width: 2; -fx-background-radius: 10;" text="+" textFill="#666666" textOverrun="WORD_ELLIPSIS">
+         <font>
+            <Font name="Tahoma" size="10.0" />
+         </font>
+      </Button>
+      <TextField fx:id="upperTextField" layoutX="549.0" layoutY="751.0" prefHeight="32.0" prefWidth="96.0" />
+      <Button fx:id="periodValuesAddButton" layoutX="549.0" layoutY="832.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="96.0" style="-fx-background-color: FFFFFF; -fx-border-color: #666666; -fx-border-radius: 5; -fx-border-width: 2; -fx-background-radius: 10;" text="Добавить" textFill="#666666" textOverrun="WORD_ELLIPSIS">
+         <font>
+            <Font name="Verdana Bold" size="11.0" />
+         </font>
+      </Button>
+      <Button fx:id="quantityDeleteButton" layoutX="611.0" layoutY="506.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="33.0" style="-fx-background-color: FFFFFF; -fx-border-color: #666666; -fx-border-radius: 5; -fx-border-width: 2; -fx-background-radius: 10;" text="-" textFill="#666666" textOverrun="WORD_ELLIPSIS">
+         <font>
+            <Font name="Tahoma" size="10.0" />
+         </font>
+      </Button>
+      <ComboBox fx:id="periodValueChoiceBox" layoutX="404.0" layoutY="709.0" prefHeight="32.0" prefWidth="177.0" promptText="Значение" />
+      <Button fx:id="checkButton" layoutX="969.0" layoutY="500.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="159.0" text="Проверка целостности" />
+      <TextArea fx:id="checkResult" layoutX="743.0" layoutY="526.0" prefHeight="313.0" prefWidth="385.0">
+         <font>
+            <Font name="Verdana" size="11.0" />
+         </font>
+      </TextArea>
+      <Label fx:id="checkResultLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="749.0" layoutY="504.0" prefHeight="17.0" prefWidth="220.0" textAlignment="CENTER" />
+      <Button fx:id="signsAddButton" layoutX="602.0" layoutY="366.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="24.0" style="-fx-background-color: FFFFFF; -fx-border-color: #666666; -fx-border-radius: 5; -fx-border-width: 2; -fx-background-radius: 10;" text="+" textFill="#666666" textOverrun="WORD_ELLIPSIS">
+         <font>
+            <Font name="Tahoma" size="14.0" />
+         </font>
+      </Button>
+      <Button fx:id="signsDeleteButton" layoutX="635.0" layoutY="366.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="33.0" style="-fx-background-color: FFFFFF; -fx-border-color: #666666; -fx-border-radius: 5; -fx-border-width: 2; -fx-background-radius: 10;" text="-" textFill="#666666" textOverrun="WORD_ELLIPSIS">
+         <font>
+            <Font name="Tahoma" size="14.0" />
+         </font>
+      </Button>
+      <Text fill="#666666" layoutX="448.0" layoutY="489.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Периоды динамики" wrappingWidth="165.0">
+         <font>
+            <Font name="Verdana Bold" size="14.0" />
+         </font>
+      </Text>
+      <Separator layoutX="416.0" layoutY="497.0" prefWidth="200.0" />
+      <Separator layoutX="416.0" layoutY="548.0" prefWidth="200.0" />
+      <Label layoutX="405.0" layoutY="558.0" prefHeight="30.0" prefWidth="123.0" text="Номер периода:">
+         <font>
+            <Font name="Verdana" size="13.0" />
+         </font></Label>
+      <Label layoutX="403.0" layoutY="507.0" prefHeight="30.0" prefWidth="123.0" text="Число периодов:">
+         <font>
+            <Font name="Verdana" size="13.0" />
+         </font></Label>
+      <ComboBox fx:id="signsForValueChoiceBox" layoutX="749.0" layoutY="80.0" prefHeight="32.0" prefWidth="286.0" promptText="Выберите признак" />
+      <Button fx:id="periodValuesDeleteButton" layoutX="406.0" layoutY="832.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="96.0" style="-fx-background-color: FFFFFF; -fx-border-color: #666666; -fx-border-radius: 5; -fx-border-width: 2; -fx-background-radius: 10;" text="Удалить" textFill="#666666" textOverrun="WORD_ELLIPSIS">
+         <font>
+            <Font name="Verdana Bold" size="11.0" />
+         </font>
+      </Button>
+      <TableView fx:id="valueTable" layoutX="405.0" layoutY="600.0" prefHeight="109.0" prefWidth="241.0" style="-fx-background-radius: 5; -fx-border-radius: 5;">
+         <columns>
+            <TableColumn fx:id="valueColumn" prefWidth="240.0" text="Значения периода" />
+         </columns>
+      </TableView>
+      <Button fx:id="addValueButton" layoutX="581.0" layoutY="709.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="33.0" style="-fx-background-color: FFFFFF; -fx-border-color: #666666; -fx-border-radius: 5; -fx-border-width: 2; -fx-background-radius: 10;" text="+" textFill="#666666" textOverrun="WORD_ELLIPSIS">
+         <font>
+            <Font name="Tahoma" size="10.0" />
+         </font>
+      </Button>
+      <Button fx:id="deleteValueButton" layoutX="613.0" layoutY="709.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="33.0" style="-fx-background-color: FFFFFF; -fx-border-color: #666666; -fx-border-radius: 5; -fx-border-width: 2; -fx-background-radius: 10;" text="-" textFill="#666666" textOverrun="WORD_ELLIPSIS">
+         <font>
+            <Font name="Tahoma" size="10.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>
