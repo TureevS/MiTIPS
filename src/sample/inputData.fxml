@@ -17,7 +17,7 @@
             <Font name="Tahoma Bold" size="37.0" />
          </font>
       </Text>
-      <Button fx:id="MenuButton" layoutX="984.0" layoutY="-1.0" mnemonicParsing="false" prefHeight="106.0" prefWidth="82.0" style="-fx-background-color: F9F9F9;" text="≡" textFill="#007439" textOverrun="WORD_ELLIPSIS">
+      <Button fx:id="MenuButton" layoutX="984.0" layoutY="-1.0" mnemonicParsing="false" prefHeight="106.0" prefWidth="82.0" style="-fx-background-color: F9F9F9;" stylesheets="@Style.css" text="≡" textFill="#007439" textOverrun="WORD_ELLIPSIS">
          <font>
             <Font name="Tahoma" size="74.0" />
          </font>
@@ -47,12 +47,12 @@
             <Font name="Tahoma" size="14.0" />
          </font>
       </Button>
-      <Button fx:id="diagnosticButton" layoutX="543.0" layoutY="140.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="535.0" style="-fx-background-color: FFFFFF; -fx-border-color: #007439; -fx-border-radius: 5; -fx-border-width: 2; -fx-background-radius: 10;" text="Поставить диагноз" textFill="#007439" textOverrun="WORD_ELLIPSIS">
+      <Button fx:id="diagnosticButton" layoutX="543.0" layoutY="140.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="535.0" style="-fx-background-color: FFFFFF; -fx-border-color: #007439; -fx-border-radius: 5; -fx-border-width: 2; -fx-background-radius: 10;" stylesheets="@Style.css" text="Поставить диагноз" textFill="#007439" textOverrun="WORD_ELLIPSIS">
          <font>
             <Font name="Verdana Bold" size="13.0" />
          </font>
       </Button>
-      <Button fx:id="clearButton" layoutX="86.0" layoutY="140.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="388.0" style="-fx-background-color: FFFFFF; -fx-border-color: #007439; -fx-border-radius: 5; -fx-border-width: 2; -fx-background-radius: 10;" text="Очистить" textFill="#007439" textOverrun="WORD_ELLIPSIS">
+      <Button fx:id="clearButton" layoutX="86.0" layoutY="140.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="388.0" style="-fx-background-color: FFFFFF; -fx-border-color: #007439; -fx-border-radius: 5; -fx-border-width: 2; -fx-background-radius: 10;" stylesheets="@Style.css" text="Очистить" textFill="#007439" textOverrun="WORD_ELLIPSIS">
          <font>
             <Font name="Verdana Bold" size="13.0" />
          </font>

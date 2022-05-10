@@ -34,10 +34,10 @@ public class Controller {
             open("/sample/inputData.fxml", dataButton, "Ввод исходных данных");
         });
         tableButton.setOnAction(event ->{
-            open("/sample/staff.fxml", tableButton, "Таблица");
+            open("", tableButton, "Таблица");
         });
         exitButton.setOnAction(event ->{
-            open("/sample/Bookkeeping.fxml", exitButton, "exit");
+            System.exit(0);
         });
 
     }

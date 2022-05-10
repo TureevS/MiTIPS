@@ -3,9 +3,15 @@ package sample;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -62,6 +68,9 @@ public class inputDataController {
     void initialize() throws SQLException, ClassNotFoundException {
         updateSignsChoiceBox();
         updateValuesTable();
+        MenuButton.setOnAction(event ->{
+            open("/sample/sample.fxml", MenuButton);
+        });
         signsChoiceBox.setOnAction(event ->{
             try {
                 if(signsChoiceBox.getValue()!= null){
@@ -158,118 +167,142 @@ public class inputDataController {
         dbHandler.deleteData("input_value", condition);
         updateValuesTable();
     }
+    public void open(String w, Button b) {
+        Stage stage = (Stage) b.getScene().getWindow();
+
+        stage.close();
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(w));
+        Parent root1 = null;
+        try {
+            root1 = fxmlLoader.load();
+        } catch (IOException exception) {
+            exception.printStackTrace();
+        }
+        stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setTitle("Решатель");
+        assert root1 != null;
+        stage.setScene(new Scene(root1));
+        stage.show();
+    }
     private void diagnostic() throws SQLException, ClassNotFoundException {
-        checkResult.clear();
-        ThreadLocalRandom random = ThreadLocalRandom.current();
-        boolean pictureFlag;
-        int errors;
-        ResultSet diseases = dbHandler.selectData("SELECT * FROM diseases");
-        ArrayList<String> unsuitable_diseases = new ArrayList<>();
-        ArrayList<String> possible_diseases = new ArrayList<>();
-        ArrayList<String> accurate_diseases = new ArrayList<>();
-        ArrayList<Integer> id_diseases = new ArrayList<>();
-        ArrayList<Integer> id_signs = new ArrayList<>();
-        ResultSet signs = dbHandler.selectData("SELECT DISTINCT sign FROM input_value");
-        while (signs.next()){
-            int id_sign = dbHandler.getId("idsigns", "signs", signs.getString(1));
-            id_signs.add(id_sign);
-        }
-        while(diseases.next()){
-            pictureFlag = true;
-            for (Integer id_sign : id_signs) {
-                if (!dbHandler.exist("pictures", diseases.getInt(1), id_sign)) {
-                    pictureFlag = false;
-                }
+        RedactorController check = new RedactorController();
+        boolean possible = check.checkBool();
+        if(possible){
+            checkResult.clear();
+            ThreadLocalRandom random = ThreadLocalRandom.current();
+            boolean pictureFlag;
+            int errors;
+            ResultSet diseases = dbHandler.selectData("SELECT * FROM diseases");
+            ArrayList<String> unsuitable_diseases = new ArrayList<>();
+            ArrayList<String> possible_diseases = new ArrayList<>();
+            ArrayList<String> accurate_diseases = new ArrayList<>();
+            ArrayList<Integer> id_diseases = new ArrayList<>();
+            ArrayList<Integer> id_signs = new ArrayList<>();
+            ResultSet signs = dbHandler.selectData("SELECT DISTINCT sign FROM input_value");
+            while (signs.next()){
+                int id_sign = dbHandler.getId("idsigns", "signs", signs.getString(1));
+                id_signs.add(id_sign);
             }
-            if(!pictureFlag){
-                checkResult.appendText(diseases.getString(2) + ":\n");
-                checkResult.appendText("\tКлиническая картина не совпадает\n");
-                unsuitable_diseases.add(diseases.getString(2));
-            }else{
-                id_diseases.add(diseases.getInt(1));
-            }
-        }
-        for (Integer id_disease : id_diseases){
-            errors=0;
-            String disease = dbHandler.getName("diseases", "idDiseases", id_disease);
-            checkResult.appendText(disease + ":\n");
-            for (Integer id_sign : id_signs) {
-                ArrayList<Integer> borders = new ArrayList<>();
-                String sign = dbHandler.getName("signs", "idsigns", id_sign);
-                ResultSet rs = dbHandler.selectData("SELECT * FROM periodvalues WHERE id_disease = "
-                        + id_disease + " AND id_sign = " + id_sign  + " ORDER BY number");
-                while (rs.next()){
-                    if(borders.isEmpty()){
-                        borders.add(random.nextInt(rs.getInt(8),rs.getInt(9)));
-                    }
-                    else{
-                        int temp = borders.get(borders.size() - 1);
-                        borders.add(temp + random.nextInt(rs.getInt(8),rs.getInt(9)));
+            while(diseases.next()){
+                pictureFlag = true;
+                for (Integer id_sign : id_signs) {
+                    if (!dbHandler.exist("pictures", diseases.getInt(1), id_sign)) {
+                        pictureFlag = false;
                     }
                 }
-                checkResult.appendText("\t" + sign + ":\n");
-                checkResult.appendText("\t\tГраницы периодов: " + borders.toString() + "\n");
-                ResultSet inputValue = dbHandler.selectData("SELECT * FROM input_value WHERE sign = '" + sign + "'");
-                while(inputValue.next()){
-                    int numberPeriod = 1;
-                    for(Integer border : borders){
-                        if(inputValue.getInt(2) > border){
-                            numberPeriod++;
-                            if(border.equals(borders.get(borders.size() - 1))){
-                                numberPeriod--;
+                if(!pictureFlag){
+                    checkResult.appendText(diseases.getString(2) + ":\n");
+                    checkResult.appendText("\tКлиническая картина не совпадает\n");
+                    unsuitable_diseases.add(diseases.getString(2));
+                }else{
+                    id_diseases.add(diseases.getInt(1));
+                }
+            }
+            for (Integer id_disease : id_diseases){
+                errors=0;
+                String disease = dbHandler.getName("diseases", "idDiseases", id_disease);
+                checkResult.appendText(disease + ":\n");
+                for (Integer id_sign : id_signs) {
+                    ArrayList<Integer> borders = new ArrayList<>();
+                    String sign = dbHandler.getName("signs", "idsigns", id_sign);
+                    ResultSet rs = dbHandler.selectData("SELECT * FROM periodvalues WHERE id_disease = "
+                            + id_disease + " AND id_sign = " + id_sign  + " ORDER BY number");
+                    while (rs.next()){
+                        if(borders.isEmpty()){
+                            borders.add(random.nextInt(rs.getInt(8),rs.getInt(9)));
+                        }
+                        else{
+                            int temp = borders.get(borders.size() - 1);
+                            borders.add(temp + random.nextInt(rs.getInt(8),rs.getInt(9)));
+                        }
+                    }
+                    checkResult.appendText("\t" + sign + ":\n");
+                    checkResult.appendText("\t\tГраницы периодов: " + borders.toString() + "\n");
+                    ResultSet inputValue = dbHandler.selectData("SELECT * FROM input_value WHERE sign = '" + sign + "'");
+                    while(inputValue.next()){
+                        int numberPeriod = 1;
+                        for(Integer border : borders){
+                            if(inputValue.getInt(2) > border){
+                                numberPeriod++;
+                                if(border.equals(borders.get(borders.size() - 1))){
+                                    numberPeriod--;
+                                }
                             }
                         }
-                    }
-                    checkResult.appendText("\t\t\tИсходной признак '" + sign + "' МВ=" + inputValue.getInt(2) +
-                            " попал в период динамики №" + numberPeriod + "\n");
-                    ResultSet value = dbHandler.selectData("SELECT value FROM periodvalues WHERE id_disease = "
-                            + id_disease + " AND id_sign = " + id_sign + " AND number = " + numberPeriod);
-                    value.next();
-                    String valueString = value.getString(1);
-                    String[] subStr;
-                    String separator = ", ";
-                    subStr = valueString.split(separator);
-                    boolean flag = false;
-                    checkResult.appendText("\t\t\t\tЗначения " + numberPeriod + " периода: ");
-                    for (String s : subStr) {
-                        checkResult.appendText(s + " ");
-                        if (inputValue.getString(3).equals(s)){
-                            flag = true;
+                        checkResult.appendText("\t\t\tИсходной признак '" + sign + "' МВ=" + inputValue.getInt(2) +
+                                " попал в период динамики №" + numberPeriod + "\n");
+                        ResultSet value = dbHandler.selectData("SELECT value FROM periodvalues WHERE id_disease = "
+                                + id_disease + " AND id_sign = " + id_sign + " AND number = " + numberPeriod);
+                        value.next();
+                        String valueString = value.getString(1);
+                        String[] subStr;
+                        String separator = ", ";
+                        subStr = valueString.split(separator);
+                        boolean flag = false;
+                        checkResult.appendText("\t\t\t\tЗначения " + numberPeriod + " периода: ");
+                        for (String s : subStr) {
+                            checkResult.appendText(s + " ");
+                            if (inputValue.getString(3).equals(s)){
+                                flag = true;
+                            }
+                        }
+                        checkResult.appendText("\n");
+                        checkResult.appendText("\t\t\t\tИсходное значение: " + inputValue.getString(3) + "\n");
+                        if(!flag){
+                            checkResult.appendText("\t\t\t\t\tЗначения не совпадают\n");
+                            errors++;
+                        }else{
+                            checkResult.appendText("\t\t\t\t\tЗначения совпадают\n");
                         }
                     }
-                    checkResult.appendText("\n");
-                    checkResult.appendText("\t\t\t\tИсходное значение: " + inputValue.getString(3) + "\n");
-                    if(!flag){
-                        checkResult.appendText("\t\t\t\t\tЗначения не совпадают\n");
-                        errors++;
-                    }else{
-                        checkResult.appendText("\t\t\t\t\tЗначения совпадают\n");
-                    }
+                }
+                if(errors==0){
+                    accurate_diseases.add(disease);
+                }else{
+                    possible_diseases.add(disease);
                 }
             }
-            if(errors==0){
-                accurate_diseases.add(disease);
-            }else{
-                possible_diseases.add(disease);
+            unsuitableTable.getItems().clear();
+            possibleTable.getItems().clear();
+            accurateTable.getItems().clear();
+            notColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
+            for(String disease:unsuitable_diseases){
+                title temp = new title(disease);
+                unsuitableTable.getItems().add(temp);
             }
-        }
-        unsuitableTable.getItems().clear();
-        possibleTable.getItems().clear();
-        accurateTable.getItems().clear();
-        notColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
-        for(String disease:unsuitable_diseases){
-            title temp = new title(disease);
-            unsuitableTable.getItems().add(temp);
-        }
-        possibleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
-        for(String disease:possible_diseases){
-            title temp = new title(disease);
-            possibleTable.getItems().add(temp);
-        }
-        accurateColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
-        for(String disease:accurate_diseases){
-            title temp = new title(disease);
-            accurateTable.getItems().add(temp);
+            possibleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
+            for(String disease:possible_diseases){
+                title temp = new title(disease);
+                possibleTable.getItems().add(temp);
+            }
+            accurateColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
+            for(String disease:accurate_diseases){
+                title temp = new title(disease);
+                accurateTable.getItems().add(temp);
+            }
+        }else{
+            ModalWindow.errorWindow("Диагностика невозможна! База знаний не полная");
         }
     }
 }

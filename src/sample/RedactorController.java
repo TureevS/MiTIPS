@@ -3,9 +3,15 @@ package sample;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -169,6 +175,7 @@ public class RedactorController {
         addValueButton.setVisible(false);
         deleteValueButton.setVisible(false);
         periodValueChoiceBox.setVisible(false);
+        MenuButton.setOnAction(event -> open("/sample/sample.fxml", MenuButton));
 
         //ОБНОВЛЕНИЯ
         update("diseases", diseasesTable, diseaseColumn);
@@ -896,6 +903,24 @@ public class RedactorController {
         }
         periodValueChoiceBox.setItems(values);
     }
+    public void open(String w, Button b) {
+        Stage stage = (Stage) b.getScene().getWindow();
+
+        stage.close();
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(w));
+        Parent root1 = null;
+        try {
+            root1 = fxmlLoader.load();
+        } catch (IOException exception) {
+            exception.printStackTrace();
+        }
+        stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setTitle("Решатель");
+        assert root1 != null;
+        stage.setScene(new Scene(root1));
+        stage.show();
+    }
 
     private void check() throws SQLException, ClassNotFoundException {
         boolean flag = true;
@@ -906,6 +931,7 @@ public class RedactorController {
         while(diseases.next()){
             if(!dbHandler.exist("pictures", diseases.getInt(1), "id_disease")){
                 checkResult.appendText(diseases.getString(2) + "\n\tОтсутствует клиническая картина\n");
+                flag = false;
             }else{
                 id_diseases.add(diseases.getInt(1));
             }
@@ -919,12 +945,14 @@ public class RedactorController {
                 checkResult.appendText("\t" + signTitle + ":\n");
                 if (!dbHandler.exist("quantityofperiods", id_disease, rs.getInt(1))) {
                     checkResult.appendText("\t\tНе заполнено ЧПД\n");
+                    flag = false;
                 } else {
                     int quantityId = dbHandler.getQuantityId(id_disease, rs.getInt(1));
                     int quantity = Integer.parseInt(dbHandler.getQuantity(id_disease, rs.getInt(1)));
                     for (int j = 1; j <= quantity; j++) {
                         if (!dbHandler.existValue(id_disease, rs.getInt(1), quantityId, j)) {
                             checkResult.appendText("\t\tУ периода динамики " + j + " не заполнено ЗДП\n");
+                            flag = false;
                         }
                     }
                 }
@@ -950,9 +978,11 @@ public class RedactorController {
                 checkResult.appendText(signs.getString(2) + ":\n");
                 if(!signFlag1){
                     checkResult.appendText("\tНе заполнены возможные значения\n");
+                    flag = false;
                 }
                 if(!signFlag2){
                     checkResult.appendText("\tНе заполнены нормальные значения\n");
+                    flag = false;
                 }
                 if(!signFlag3){
                     checkResult.appendText("\tПризнака нет ни в одной клинической картине\n");
@@ -966,13 +996,62 @@ public class RedactorController {
 
         }
     }
+
+    public boolean checkBool() throws SQLException, ClassNotFoundException {
+        boolean flag = true;
+        ResultSet diseases = dbHandler.selectData("SELECT * FROM diseases");
+        ArrayList<Integer> id_diseases = new ArrayList<>();
+        while(diseases.next()){
+            if(!dbHandler.exist("pictures", diseases.getInt(1), "id_disease")){
+                flag = false;
+            }else{
+                id_diseases.add(diseases.getInt(1));
+            }
+        }
+        for (Integer id_disease : id_diseases) {
+            ResultSet rs = dbHandler.selectData("SELECT id_sign FROM pictures WHERE id_disease = " + id_disease);
+            while (rs.next()) {
+                if (!dbHandler.exist("quantityofperiods", id_disease, rs.getInt(1))) {
+                    flag = false;
+                } else {
+                    int quantityId = dbHandler.getQuantityId(id_disease, rs.getInt(1));
+                    int quantity = Integer.parseInt(dbHandler.getQuantity(id_disease, rs.getInt(1)));
+                    for (int j = 1; j <= quantity; j++) {
+                        if (!dbHandler.existValue(id_disease, rs.getInt(1), quantityId, j)) {
+                            flag = false;
+                        }
+                    }
+                }
+            }
+        }
+        ResultSet signs = dbHandler.selectData("SELECT * FROM signs");
+        boolean signFlag1, signFlag2, signFlag3;
+        while(signs.next()){
+            signFlag1 = true;
+            signFlag2 = true;
+            signFlag3 = true;
+            if (!dbHandler.exist("possible_values_str", signs.getInt(1), "id_sign")){
+                signFlag1 = false;
+            }
+            if (!dbHandler.exist("normal_values_str", signs.getInt(1), "id_sign")){
+                signFlag2 = false;
+            }
+            if(!dbHandler.exist("pictures", signs.getInt(1), "id_sign")){
+                signFlag3 = false;
+            }
+            if(!signFlag1 || !signFlag2 || !signFlag3){
+                if(!signFlag1){
+                    flag = false;
+                }
+                if(!signFlag2){
+                    flag = false;
+                }
+                if(!signFlag3){
+                    flag = false;
+                }
+            }
+        }
+        return flag;
+    }
 }
 
-/*Pattern pat=Pattern.compile("[-]?[0-9]+(.[0-9]+)?");
-                    Matcher matcher=pat.matcher(value);
-                    ArrayList<Float> values = new ArrayList<>();
-                    while (matcher.find()) {
-                        values.add(Float.parseFloat(matcher.group()));
-                    }
-                    bottom = values.get(0);
-                    upper = values.get(1);*/

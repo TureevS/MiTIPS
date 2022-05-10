@@ -21,7 +21,7 @@
             <Font name="Tahoma Bold" size="37.0" />
          </font>
       </Text>
-      <Button fx:id="MenuButton" layoutX="1019.0" layoutY="-24.0" mnemonicParsing="false" prefHeight="106.0" prefWidth="82.0" style="-fx-background-color: F9F9F9;" text="≡" textFill="#007439" textOverrun="WORD_ELLIPSIS">
+      <Button fx:id="MenuButton" layoutX="1019.0" layoutY="-24.0" mnemonicParsing="false" prefHeight="106.0" prefWidth="82.0" style="-fx-background-color: F9F9F9;" stylesheets="@Style.css" text="≡" textFill="#007439" textOverrun="WORD_ELLIPSIS">
          <font>
             <Font name="Tahoma" size="74.0" />
          </font>
